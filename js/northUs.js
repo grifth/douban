@@ -25,6 +25,7 @@
     render(data){
       data.subjects.forEach((information)=>{
         var $node = $(this.template)
+        $node.find('a').attr('href',information.subject.alt)
         $node.find('.cover img').attr('src',information.subject.images.medium)
         $node.find('.detail h2').text(information.subject.title)
         $node.find('.score').text(information.subject.rating.average)
@@ -56,7 +57,6 @@
                 this.isLoading = false
                 $('.loading').hide()
                 callback(ret)
-                console.log(callback);
               })
     },
   }
@@ -72,7 +72,7 @@
         this.model.page++
       })
       this.bindEventHub()
-      this.bindEvents()
+      // this.bindEvents()
     },
     bindEventHub(){
       eventhub.on('select',(data)=>{
@@ -88,31 +88,6 @@
         }
 
       })
-    },
-    bindEvents(){
-      $('main').scroll(()=>{
-
-        if(this.isToBottom(this.view.$el, $('main'))&&!this.model.isFinshed&&!this.model.isLoading){
-
-
-          this.model.fetch((ret)=>{
-            this.view.render(ret)
-            console.log(ret);
-            this.model.page++
-
-            if(this.model.page*this.model.count>ret.total){
-              this.model.isFinshed = true
-            }
-
-          })
-        }
-      })
-    },
-    isToBottom($content,$viewport){
-      let  sHeight = $content.height()
-      let  mHeight =  $viewport.height()
-      let  mScrollTop = $viewport.scrollTop()
-      return   mHeight + mScrollTop + 30 > sHeight
     }
   }
 

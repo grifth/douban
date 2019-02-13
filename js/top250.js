@@ -25,6 +25,7 @@
     render(data){
       data.subjects.forEach((subject)=>{
         var $node = $(this.template)
+        $node.find('a').attr('href',subject.alt)
         $node.find('.cover img').attr('src',subject.images.medium)
         $node.find('.detail h2').text(subject.title)
         $node.find('.score').text(subject.rating.average)
